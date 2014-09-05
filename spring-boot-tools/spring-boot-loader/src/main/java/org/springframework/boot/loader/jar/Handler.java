@@ -143,6 +143,17 @@ public class Handler extends URLStreamHandler {
 			throw new MalformedURLException("Jar URL does not contain !/ separator");
 		}
 		String name = spec.substring(0, separatorIndex);
+
+        separatorIndex = name.indexOf(":");
+        while(separatorIndex != -1) {
+            int nextIndex = name.indexOf(":", separatorIndex+1);
+            if(nextIndex != -1) {
+                name = name.substring(separatorIndex+1);
+            } else {
+                break;
+            }
+            separatorIndex = nextIndex;
+        }
 		return getRootJarFile(name);
 	}
 
